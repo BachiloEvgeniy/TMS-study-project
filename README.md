@@ -1,1 +1,1 @@
-## SWIFT STUDY PROJECT
+## SWIFT STUDY PROJECT by Evgeniy Bachilo
