@@ -45,10 +45,10 @@ let students: [Student] = [Mike, Nina, Tom, Sam, John, Masha]
 print("______calculateAverageGrade______\n")
 
 func calculateAverageGrade(student: Student) -> Double? {
-    if student.grades.isEmpty {
+    guard !student.grades.isEmpty else {
         return nil
     }
-    let sum = student.grades.values.reduce(0){ partialResult, number in
+    let sum = student.grades.values.reduce(0) { partialResult, number in
          partialResult + number }
     
     return Double(sum) / Double(student.grades.count)
