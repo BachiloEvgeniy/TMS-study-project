@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "pexels-quang-nguyen-vinh-222549-2563129.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

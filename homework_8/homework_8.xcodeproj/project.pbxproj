@@ -7,32 +7,32 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		1E4C7CFA2F922C0D00DF8C08 /* TMS-study-project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMS-study-project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E37E1FA2FADECE300AC6DDC /* homework_8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = homework_8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		1E4C7D0C2F922C0F00DF8C08 /* Exceptions for "TMS-study-project" folder in "TMS-study-project" target */ = {
+		1E37E20C2FADECE400AC6DDC /* Exceptions for "homework_8" folder in "homework_8" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 1E4C7CF92F922C0D00DF8C08 /* TMS-study-project */;
+			target = 1E37E1F92FADECE300AC6DDC /* homework_8 */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		1E4C7CFC2F922C0D00DF8C08 /* TMS-study-project */ = {
+		1E37E1FC2FADECE300AC6DDC /* homework_8 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				1E4C7D0C2F922C0F00DF8C08 /* Exceptions for "TMS-study-project" folder in "TMS-study-project" target */,
+				1E37E20C2FADECE400AC6DDC /* Exceptions for "homework_8" folder in "homework_8" target */,
 			);
-			path = "TMS-study-project";
+			path = homework_8;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1E4C7CF72F922C0D00DF8C08 /* Frameworks */ = {
+		1E37E1F72FADECE300AC6DDC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,18 +42,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1E4C7CF12F922C0D00DF8C08 = {
+		1E37E1F12FADECE300AC6DDC = {
 			isa = PBXGroup;
 			children = (
-				1E4C7CFC2F922C0D00DF8C08 /* TMS-study-project */,
-				1E4C7CFB2F922C0D00DF8C08 /* Products */,
+				1E37E1FC2FADECE300AC6DDC /* homework_8 */,
+				1E37E1FB2FADECE300AC6DDC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		1E4C7CFB2F922C0D00DF8C08 /* Products */ = {
+		1E37E1FB2FADECE300AC6DDC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1E4C7CFA2F922C0D00DF8C08 /* TMS-study-project.app */,
+				1E37E1FA2FADECE300AC6DDC /* homework_8.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,64 +61,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1E4C7CF92F922C0D00DF8C08 /* TMS-study-project */ = {
+		1E37E1F92FADECE300AC6DDC /* homework_8 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1E4C7D0D2F922C0F00DF8C08 /* Build configuration list for PBXNativeTarget "TMS-study-project" */;
+			buildConfigurationList = 1E37E20D2FADECE400AC6DDC /* Build configuration list for PBXNativeTarget "homework_8" */;
 			buildPhases = (
-				1E4C7CF62F922C0D00DF8C08 /* Sources */,
-				1E4C7CF72F922C0D00DF8C08 /* Frameworks */,
-				1E4C7CF82F922C0D00DF8C08 /* Resources */,
+				1E37E1F62FADECE300AC6DDC /* Sources */,
+				1E37E1F72FADECE300AC6DDC /* Frameworks */,
+				1E37E1F82FADECE300AC6DDC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				1E4C7CFC2F922C0D00DF8C08 /* TMS-study-project */,
+				1E37E1FC2FADECE300AC6DDC /* homework_8 */,
 			);
-			name = "TMS-study-project";
+			name = homework_8;
 			packageProductDependencies = (
 			);
-			productName = "TMS-study-project";
-			productReference = 1E4C7CFA2F922C0D00DF8C08 /* TMS-study-project.app */;
+			productName = homework_8;
+			productReference = 1E37E1FA2FADECE300AC6DDC /* homework_8.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		1E4C7CF22F922C0D00DF8C08 /* Project object */ = {
+		1E37E1F22FADECE300AC6DDC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
-					1E4C7CF92F922C0D00DF8C08 = {
-						CreatedOnToolsVersion = 26.0.1;
+					1E37E1F92FADECE300AC6DDC = {
+						CreatedOnToolsVersion = 26.4.1;
 					};
 				};
 			};
-			buildConfigurationList = 1E4C7CF52F922C0D00DF8C08 /* Build configuration list for PBXProject "TMS-study-project" */;
+			buildConfigurationList = 1E37E1F52FADECE300AC6DDC /* Build configuration list for PBXProject "homework_8" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 1E4C7CF12F922C0D00DF8C08;
+			mainGroup = 1E37E1F12FADECE300AC6DDC;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 1E4C7CFB2F922C0D00DF8C08 /* Products */;
+			productRefGroup = 1E37E1FB2FADECE300AC6DDC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1E4C7CF92F922C0D00DF8C08 /* TMS-study-project */,
+				1E37E1F92FADECE300AC6DDC /* homework_8 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1E4C7CF82F922C0D00DF8C08 /* Resources */ = {
+		1E37E1F82FADECE300AC6DDC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -128,7 +128,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1E4C7CF62F922C0D00DF8C08 /* Sources */ = {
+		1E37E1F62FADECE300AC6DDC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -138,7 +138,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1E4C7D0E2F922C0F00DF8C08 /* Debug */ = {
+		1E37E20E2FADECE400AC6DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZJQ5664URJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "TMS-study-project/Info.plist";
+				INFOPLIST_FILE = homework_8/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -158,7 +158,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bachilo.TMS-study-project";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bachilo.homework-8";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -170,7 +170,7 @@
 			};
 			name = Debug;
 		};
-		1E4C7D0F2F922C0F00DF8C08 /* Release */ = {
+		1E37E20F2FADECE400AC6DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -179,7 +179,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZJQ5664URJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "TMS-study-project/Info.plist";
+				INFOPLIST_FILE = homework_8/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -190,7 +190,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bachilo.TMS-study-project";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bachilo.homework-8";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -202,7 +202,7 @@
 			};
 			name = Release;
 		};
-		1E4C7D102F922C0F00DF8C08 /* Debug */ = {
+		1E37E2102FADECE400AC6DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -255,7 +255,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -266,7 +266,7 @@
 			};
 			name = Debug;
 		};
-		1E4C7D112F922C0F00DF8C08 /* Release */ = {
+		1E37E2112FADECE400AC6DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -313,7 +313,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -326,25 +326,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1E4C7CF52F922C0D00DF8C08 /* Build configuration list for PBXProject "TMS-study-project" */ = {
+		1E37E1F52FADECE300AC6DDC /* Build configuration list for PBXProject "homework_8" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1E4C7D102F922C0F00DF8C08 /* Debug */,
-				1E4C7D112F922C0F00DF8C08 /* Release */,
+				1E37E2102FADECE400AC6DDC /* Debug */,
+				1E37E2112FADECE400AC6DDC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1E4C7D0D2F922C0F00DF8C08 /* Build configuration list for PBXNativeTarget "TMS-study-project" */ = {
+		1E37E20D2FADECE400AC6DDC /* Build configuration list for PBXNativeTarget "homework_8" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1E4C7D0E2F922C0F00DF8C08 /* Debug */,
-				1E4C7D0F2F922C0F00DF8C08 /* Release */,
+				1E37E20E2FADECE400AC6DDC /* Debug */,
+				1E37E20F2FADECE400AC6DDC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 1E4C7CF22F922C0D00DF8C08 /* Project object */;
+	rootObject = 1E37E1F22FADECE300AC6DDC /* Project object */;
 }
