@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  TMS-study-project
+//  homework_8
 //
-//  Created by Evgeniy Bachilo on 17.04.26.
+//  Created by Evgeniy Bachilo on 08.05.2026.
 //
 
 import UIKit
