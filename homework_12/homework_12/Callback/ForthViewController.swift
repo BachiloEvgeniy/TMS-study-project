@@ -9,9 +9,7 @@
 import UIKit
 
 class ForthViewController: UIViewController {
-    
-
-    
+        
     private let textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter text"
