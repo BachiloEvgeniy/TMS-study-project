@@ -51,7 +51,5 @@ class ThirdViewController: UIViewController {
             for: .touchUpInside
         )
     }
-    
-
 }
 
