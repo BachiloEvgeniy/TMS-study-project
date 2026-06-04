@@ -29,6 +29,10 @@ class CollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
+    
     func configure(name: String){
         imageView.image = UIImage(systemName: name)
         imageView.tintColor = .darkGray 
