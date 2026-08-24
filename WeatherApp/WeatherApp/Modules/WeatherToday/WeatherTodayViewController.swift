@@ -2,6 +2,8 @@ import UIKit
 
 final class WeatherTodayViewController: UIViewController {
 
+    private let weatherService = WeatherService()
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title1)
@@ -21,19 +23,34 @@ final class WeatherTodayViewController: UIViewController {
         return label
     }()
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
+
+    private let sourceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Данные: Open-Meteo", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .footnote)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         configureNavigationBar()
         configureLayout()
-        showContent(
-            title: "Погода сегодня",
-            message: "Здесь появятся текущая погода, почасовой и пятидневный прогноз."
-        )
+        loadWeather()
     }
 
     private func configureView() {
         view.backgroundColor = .systemGroupedBackground
+        sourceButton.addTarget(
+            self,
+            action: #selector(didTapSource),
+            for: .touchUpInside
+        )
     }
 
     private func configureNavigationBar() {
@@ -50,7 +67,9 @@ final class WeatherTodayViewController: UIViewController {
     }
 
     private func configureLayout() {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, messageLabel])
+        let stackView = UIStackView(
+            arrangedSubviews: [activityIndicator, titleLabel, messageLabel, sourceButton]
+        )
         stackView.axis = .vertical
         stackView.spacing = 12
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +89,46 @@ final class WeatherTodayViewController: UIViewController {
         messageLabel.text = message
     }
 
+    private func loadWeather() {
+        setLoading(true)
+        showContent(title: "Минск", message: "Загружаем погоду…")
+
+        Task { [weak self] in
+            guard let self else { return }
+            defer { setLoading(false) }
+
+            do {
+                let weather = try await weatherService.fetchCurrentWeather(
+                    city: "Минск",
+                    latitude: 53.9,
+                    longitude: 27.5667
+                )
+                let temperature = weather.temperature.formatted(
+                    .number.precision(.fractionLength(0))
+                )
+                showContent(
+                    title: weather.city,
+                    message: "\(temperature) °C\n\(weather.description)"
+                )
+            } catch {
+                showContent(
+                    title: "Не удалось загрузить погоду",
+                    message: "Проверьте подключение к интернету и попробуйте ещё раз.\n\(error.localizedDescription)"
+                )
+            }
+        }
+    }
+
+    private func setLoading(_ isLoading: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = !isLoading
+
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+
     @objc private func didTapSearch() {
         showContent(
             title: "Поиск города",
@@ -78,9 +137,11 @@ final class WeatherTodayViewController: UIViewController {
     }
 
     @objc private func didTapRefresh() {
-        showContent(
-            title: "Обновление",
-            message: "Источник погодных данных пока не подключён."
-        )
+        loadWeather()
+    }
+
+    @objc private func didTapSource() {
+        guard let url = URL(string: "https://open-meteo.com/") else { return }
+        UIApplication.shared.open(url)
     }
 }
