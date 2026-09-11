@@ -1,6 +1,14 @@
 import Foundation
 
-final class WeatherService {
+protocol WeatherServiceProtocol: AnyObject {
+    func fetchCurrentWeather(
+        city: String,
+        latitude: Double,
+        longitude: Double
+    ) async throws -> Weather
+}
+
+final class WeatherService: WeatherServiceProtocol {
 
     func fetchCurrentWeather(
         city: String,

@@ -2,7 +2,7 @@ import UIKit
 
 final class WeatherTodayViewController: UIViewController {
 
-    private let weatherService = WeatherService()
+    var presenter: WeatherTodayPresenterProtocol!
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -41,7 +41,7 @@ final class WeatherTodayViewController: UIViewController {
         configureView()
         configureNavigationBar()
         configureLayout()
-        loadWeather()
+        presenter.viewDidLoad()
     }
 
     private func configureView() {
@@ -83,43 +83,28 @@ final class WeatherTodayViewController: UIViewController {
         ])
     }
 
-    private func showContent(title: String, message: String) {
-        self.title = "Погода"
-        titleLabel.text = title
-        messageLabel.text = message
+    @objc private func didTapSearch() {
+        presenter.didTapSearch()
     }
 
-    private func loadWeather() {
-        setLoading(true)
-        showContent(title: "Минск", message: "Загружаем погоду…")
-
-        Task { [weak self] in
-            guard let self else { return }
-            defer { setLoading(false) }
-
-            do {
-                let weather = try await weatherService.fetchCurrentWeather(
-                    city: "Минск",
-                    latitude: 53.9,
-                    longitude: 27.5667
-                )
-                let temperature = weather.temperature.formatted(
-                    .number.precision(.fractionLength(0))
-                )
-                showContent(
-                    title: weather.city,
-                    message: "\(temperature) °C\n\(weather.description)"
-                )
-            } catch {
-                showContent(
-                    title: "Не удалось загрузить погоду",
-                    message: "Проверьте подключение к интернету и попробуйте ещё раз.\n\(error.localizedDescription)"
-                )
-            }
-        }
+    @objc private func didTapRefresh() {
+        presenter.didTapRefresh()
     }
 
-    private func setLoading(_ isLoading: Bool) {
+    @objc private func didTapSource() {
+        presenter.didTapSource()
+    }
+}
+
+extension WeatherTodayViewController: WeatherTodayViewProtocol {
+
+    func displayWeather(_ viewModel: WeatherTodayViewModel) {
+        title = "Погода"
+        titleLabel.text = viewModel.title
+        messageLabel.text = viewModel.message
+    }
+
+    func setLoading(_ isLoading: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = !isLoading
 
         if isLoading {
@@ -129,19 +114,7 @@ final class WeatherTodayViewController: UIViewController {
         }
     }
 
-    @objc private func didTapSearch() {
-        showContent(
-            title: "Поиск города",
-            message: "Экран поиска будет подключён на следующем этапе."
-        )
-    }
-
-    @objc private func didTapRefresh() {
-        loadWeather()
-    }
-
-    @objc private func didTapSource() {
-        guard let url = URL(string: "https://open-meteo.com/") else { return }
+    func openSource(_ url: URL) {
         UIApplication.shared.open(url)
     }
 }

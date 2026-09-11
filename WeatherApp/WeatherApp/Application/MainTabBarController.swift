@@ -10,6 +10,12 @@ final class MainTabBarController: UITabBarController {
 
     private func configureTabs() {
         let weatherViewController = WeatherTodayViewController()
+        let weatherPresenter = WeatherTodayPresenter(
+            view: weatherViewController,
+            weatherService: WeatherService()
+        )
+        weatherViewController.presenter = weatherPresenter
+
         let weatherNavigationController = UINavigationController(
             rootViewController: weatherViewController
         )
@@ -20,6 +26,9 @@ final class MainTabBarController: UITabBarController {
         )
 
         let mapViewController = WeatherMapViewController()
+        let mapPresenter = WeatherMapPresenter(view: mapViewController)
+        mapViewController.presenter = mapPresenter
+
         let mapNavigationController = UINavigationController(
             rootViewController: mapViewController
         )

@@ -3,6 +3,8 @@ import UIKit
 
 final class WeatherMapViewController: UIViewController {
 
+    var presenter: WeatherMapPresenterProtocol!
+
     private let mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +27,7 @@ final class WeatherMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
-        title = "Карта погоды"
-        messageLabel.text = "Здесь появятся текущее местоположение и погодные маркеры городов."
+        presenter.viewDidLoad()
     }
 
     private func configureLayout() {
@@ -45,5 +46,13 @@ final class WeatherMapViewController: UIViewController {
             messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             messageLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
+    }
+}
+
+extension WeatherMapViewController: WeatherMapViewProtocol {
+
+    func displayMap(title: String, message: String) {
+        self.title = title
+        messageLabel.text = message
     }
 }
