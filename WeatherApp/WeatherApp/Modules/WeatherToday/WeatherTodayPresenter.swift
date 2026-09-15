@@ -5,6 +5,14 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
     private weak var view: WeatherTodayViewProtocol?
     private let weatherService: WeatherServiceProtocol
 
+    private var selectedCity = City(
+        name: "Минск",
+        country: "Беларусь",
+        region: nil,
+        latitude: 53.9,
+        longitude: 27.5667
+    )
+
     init(
         view: WeatherTodayViewProtocol,
         weatherService: WeatherServiceProtocol
@@ -18,11 +26,7 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
     }
 
     func didTapSearch() {
-        let viewModel = WeatherTodayViewModel(
-            title: "Поиск города",
-            message: "Экран поиска будет подключён на следующем этапе."
-        )
-        view?.displayWeather(viewModel)
+        view?.showCitySearch(delegate: self)
     }
 
     func didTapRefresh() {
@@ -35,10 +39,13 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
     }
 
     private func loadWeather() {
+        let city = selectedCity
+        let cityTitle = makeCityTitle(from: city)
+
         view?.setLoading(true)
         view?.displayWeather(
             WeatherTodayViewModel(
-                title: "Минск",
+                title: cityTitle,
                 message: "Загружаем погоду…"
             )
         )
@@ -49,9 +56,9 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
 
             do {
                 let weather = try await weatherService.fetchCurrentWeather(
-                    city: "Минск",
-                    latitude: 53.9,
-                    longitude: 27.5667
+                    city: cityTitle,
+                    latitude: city.latitude,
+                    longitude: city.longitude
                 )
                 let viewModel = makeViewModel(from: weather)
                 view?.displayWeather(viewModel)
@@ -74,5 +81,18 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
             title: weather.city,
             message: "\(temperature) °C\n\(weather.description)"
         )
+    }
+
+    private func makeCityTitle(from city: City) -> String {
+        guard !city.country.isEmpty else { return city.name }
+        return "\(city.name), \(city.country)"
+    }
+}
+
+extension WeatherTodayPresenter: CitySearchDelegate {
+
+    func didSelectCity(_ city: City) {
+        selectedCity = city
+        loadWeather()
     }
 }

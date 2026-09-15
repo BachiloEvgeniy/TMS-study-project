@@ -105,6 +105,7 @@ extension WeatherTodayViewController: WeatherTodayViewProtocol {
     }
 
     func setLoading(_ isLoading: Bool) {
+        navigationItem.leftBarButtonItem?.isEnabled = !isLoading
         navigationItem.rightBarButtonItem?.isEnabled = !isLoading
 
         if isLoading {
@@ -112,6 +113,21 @@ extension WeatherTodayViewController: WeatherTodayViewProtocol {
         } else {
             activityIndicator.stopAnimating()
         }
+    }
+
+    func showCitySearch(delegate: CitySearchDelegate) {
+        let citySearchViewController = CitySearchViewController()
+        let citySearchPresenter = CitySearchPresenter(
+            view: citySearchViewController,
+            citySearchService: CitySearchService(),
+            delegate: delegate
+        )
+        citySearchViewController.presenter = citySearchPresenter
+
+        let navigationController = UINavigationController(
+            rootViewController: citySearchViewController
+        )
+        present(navigationController, animated: true)
     }
 
     func openSource(_ url: URL) {

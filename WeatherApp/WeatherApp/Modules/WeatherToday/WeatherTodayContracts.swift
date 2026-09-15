@@ -3,6 +3,7 @@ import Foundation
 protocol WeatherTodayViewProtocol: AnyObject {
     func displayWeather(_ viewModel: WeatherTodayViewModel)
     func setLoading(_ isLoading: Bool)
+    func showCitySearch(delegate: CitySearchDelegate)
     func openSource(_ url: URL)
 }
 
