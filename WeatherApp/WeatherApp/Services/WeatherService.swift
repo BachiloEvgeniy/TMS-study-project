@@ -19,8 +19,45 @@ final class WeatherService: WeatherServiceProtocol {
         components?.queryItems = [
             URLQueryItem(name: "latitude", value: String(latitude)),
             URLQueryItem(name: "longitude", value: String(longitude)),
-            URLQueryItem(name: "current", value: "temperature_2m,weather_code"),
-            URLQueryItem(name: "timezone", value: "auto")
+            URLQueryItem(
+                name: "current",
+                value: [
+                    "temperature_2m",
+                    "relative_humidity_2m",
+                    "apparent_temperature",
+                    "weather_code",
+                    "surface_pressure",
+                    "wind_speed_10m",
+                    "is_day"
+                ].joined(separator: ",")
+            ),
+            URLQueryItem(
+                name: "hourly",
+                value: [
+                    "temperature_2m",
+                    "weather_code",
+                    "uv_index",
+                    "precipitation_probability",
+                    "visibility",
+                    "is_day"
+                ].joined(separator: ",")
+            ),
+            URLQueryItem(
+                name: "daily",
+                value: [
+                    "weather_code",
+                    "temperature_2m_max",
+                    "temperature_2m_min",
+                    "sunrise",
+                    "sunset",
+                    "precipitation_probability_max",
+                    "uv_index_max"
+                ].joined(separator: ",")
+            ),
+            URLQueryItem(name: "timezone", value: "auto"),
+            URLQueryItem(name: "forecast_hours", value: "24"),
+            URLQueryItem(name: "forecast_days", value: "5"),
+            URLQueryItem(name: "wind_speed_unit", value: "ms")
         ]
 
         guard let url = components?.url else {
@@ -34,62 +71,166 @@ final class WeatherService: WeatherServiceProtocol {
             throw WeatherServiceError.invalidResponse
         }
 
-        let responseModel = try JSONDecoder().decode(WeatherResponse.self, from: data)
+        let responseModel: WeatherResponse
+
+        do {
+            responseModel = try JSONDecoder().decode(WeatherResponse.self, from: data)
+        } catch {
+            throw WeatherServiceError.decodingFailed
+        }
+
+        return makeWeather(city: city, response: responseModel)
+    }
+
+    private func makeWeather(city: String, response: WeatherResponse) -> Weather {
+        let hourly = makeHourlyWeather(from: response.hourly)
+        let daily = makeDailyWeather(from: response.daily)
+
+        let current = CurrentWeather(
+            time: response.current.time,
+            temperature: response.current.temperature,
+            apparentTemperature: response.current.apparentTemperature,
+            humidity: response.current.humidity,
+            weatherCode: response.current.weatherCode,
+            surfacePressure: response.current.surfacePressure,
+            windSpeed: response.current.windSpeed,
+            uvIndex: response.hourly.uvIndex.first ?? 0,
+            isDay: response.current.isDay == 1
+        )
 
         return Weather(
             city: city,
-            temperature: responseModel.current.temperature,
-            description: description(for: responseModel.current.weatherCode)
+            timezone: response.timezone,
+            current: current,
+            hourly: hourly,
+            daily: daily
         )
     }
 
-    private func description(for weatherCode: Int) -> String {
-        switch weatherCode {
-        case 0:
-            return "Ясно"
-        case 1:
-            return "Преимущественно ясно"
-        case 2:
-            return "Переменная облачность"
-        case 3:
-            return "Пасмурно"
-        case 45, 48:
-            return "Туман"
-        case 51, 53, 55, 56, 57:
-            return "Морось"
-        case 61, 63, 65, 66, 67:
-            return "Дождь"
-        case 71, 73, 75, 77:
-            return "Снег"
-        case 80, 81, 82:
-            return "Ливень"
-        case 85, 86:
-            return "Снегопад"
-        case 95, 96, 99:
-            return "Гроза"
-        default:
-            return "Неизвестные погодные условия"
+    private func makeHourlyWeather(from response: HourlyWeatherResponse) -> [HourlyWeather] {
+        let count = [
+            response.time.count,
+            response.temperature.count,
+            response.weatherCode.count,
+            response.precipitationProbability.count,
+            response.visibility.count,
+            response.isDay.count
+        ].min() ?? 0
+
+        return (0..<count).map { index in
+            HourlyWeather(
+                time: response.time[index],
+                temperature: response.temperature[index],
+                weatherCode: response.weatherCode[index],
+                precipitationProbability: response.precipitationProbability[index],
+                visibility: response.visibility[index],
+                isDay: response.isDay[index] == 1
+            )
+        }
+    }
+
+    private func makeDailyWeather(from response: DailyWeatherResponse) -> [DailyWeather] {
+        let count = [
+            response.time.count,
+            response.weatherCode.count,
+            response.maximumTemperature.count,
+            response.minimumTemperature.count,
+            response.sunrise.count,
+            response.sunset.count,
+            response.precipitationProbability.count,
+            response.uvIndex.count
+        ].min() ?? 0
+
+        return (0..<count).map { index in
+            DailyWeather(
+                date: response.time[index],
+                weatherCode: response.weatherCode[index],
+                maximumTemperature: response.maximumTemperature[index],
+                minimumTemperature: response.minimumTemperature[index],
+                sunrise: response.sunrise[index],
+                sunset: response.sunset[index],
+                precipitationProbability: response.precipitationProbability[index],
+                uvIndex: response.uvIndex[index]
+            )
         }
     }
 }
 
 private struct WeatherResponse: Decodable {
-    let current: CurrentWeather
+    let timezone: String
+    let current: CurrentWeatherResponse
+    let hourly: HourlyWeatherResponse
+    let daily: DailyWeatherResponse
 }
 
-private struct CurrentWeather: Decodable {
+private struct CurrentWeatherResponse: Decodable {
+    let time: String
     let temperature: Double
+    let apparentTemperature: Double
+    let humidity: Int
     let weatherCode: Int
+    let surfacePressure: Double
+    let windSpeed: Double
+    let isDay: Int
 
     enum CodingKeys: String, CodingKey {
+        case time
+        case temperature = "temperature_2m"
+        case apparentTemperature = "apparent_temperature"
+        case humidity = "relative_humidity_2m"
+        case weatherCode = "weather_code"
+        case surfacePressure = "surface_pressure"
+        case windSpeed = "wind_speed_10m"
+        case isDay = "is_day"
+    }
+}
+
+private struct HourlyWeatherResponse: Decodable {
+    let time: [String]
+    let temperature: [Double]
+    let weatherCode: [Int]
+    let uvIndex: [Double]
+    let precipitationProbability: [Int]
+    let visibility: [Double]
+    let isDay: [Int]
+
+    enum CodingKeys: String, CodingKey {
+        case time
         case temperature = "temperature_2m"
         case weatherCode = "weather_code"
+        case uvIndex = "uv_index"
+        case precipitationProbability = "precipitation_probability"
+        case visibility
+        case isDay = "is_day"
+    }
+}
+
+private struct DailyWeatherResponse: Decodable {
+    let time: [String]
+    let weatherCode: [Int]
+    let maximumTemperature: [Double]
+    let minimumTemperature: [Double]
+    let sunrise: [String]
+    let sunset: [String]
+    let precipitationProbability: [Int]
+    let uvIndex: [Double]
+
+    enum CodingKeys: String, CodingKey {
+        case time
+        case weatherCode = "weather_code"
+        case maximumTemperature = "temperature_2m_max"
+        case minimumTemperature = "temperature_2m_min"
+        case sunrise
+        case sunset
+        case precipitationProbability = "precipitation_probability_max"
+        case uvIndex = "uv_index_max"
     }
 }
 
 private enum WeatherServiceError: LocalizedError {
     case invalidURL
     case invalidResponse
+    case decodingFailed
 
     var errorDescription: String? {
         switch self {
@@ -97,6 +238,8 @@ private enum WeatherServiceError: LocalizedError {
             return "Не удалось создать адрес запроса."
         case .invalidResponse:
             return "Сервер вернул некорректный ответ."
+        case .decodingFailed:
+            return "Не удалось обработать данные о погоде."
         }
     }
 }
