@@ -166,5 +166,6 @@ extension CitySearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         presenter.didSubmitSearch(searchBar.text ?? "")
         searchBar.resignFirstResponder()
+        searchController.isActive = false
     }
 }
