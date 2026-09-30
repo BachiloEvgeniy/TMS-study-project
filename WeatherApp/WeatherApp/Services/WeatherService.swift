@@ -39,6 +39,7 @@ final class WeatherService: WeatherServiceProtocol {
                     "uv_index",
                     "precipitation_probability",
                     "visibility",
+                    "surface_pressure",
                     "is_day"
                 ].joined(separator: ",")
             ),
@@ -55,7 +56,6 @@ final class WeatherService: WeatherServiceProtocol {
                 ].joined(separator: ",")
             ),
             URLQueryItem(name: "timezone", value: "auto"),
-            URLQueryItem(name: "forecast_hours", value: "24"),
             URLQueryItem(name: "forecast_days", value: "5"),
             URLQueryItem(name: "wind_speed_unit", value: "ms")
         ]
@@ -85,6 +85,13 @@ final class WeatherService: WeatherServiceProtocol {
     private func makeWeather(city: String, response: WeatherResponse) -> Weather {
         let hourly = makeHourlyWeather(from: response.hourly)
         let daily = makeDailyWeather(from: response.daily)
+        let currentHour = String(response.current.time.prefix(13))
+        let currentHourIndex = response.hourly.time.firstIndex {
+            $0.hasPrefix(currentHour)
+        } ?? 0
+        let currentUVIndex = response.hourly.uvIndex.indices.contains(currentHourIndex)
+            ? response.hourly.uvIndex[currentHourIndex]
+            : 0
 
         let current = CurrentWeather(
             time: response.current.time,
@@ -94,7 +101,7 @@ final class WeatherService: WeatherServiceProtocol {
             weatherCode: response.current.weatherCode,
             surfacePressure: response.current.surfacePressure,
             windSpeed: response.current.windSpeed,
-            uvIndex: response.hourly.uvIndex.first ?? 0,
+            uvIndex: currentUVIndex,
             isDay: response.current.isDay == 1
         )
 
@@ -114,6 +121,7 @@ final class WeatherService: WeatherServiceProtocol {
             response.weatherCode.count,
             response.precipitationProbability.count,
             response.visibility.count,
+            response.surfacePressure.count,
             response.isDay.count
         ].min() ?? 0
 
@@ -124,6 +132,7 @@ final class WeatherService: WeatherServiceProtocol {
                 weatherCode: response.weatherCode[index],
                 precipitationProbability: response.precipitationProbability[index],
                 visibility: response.visibility[index],
+                surfacePressure: response.surfacePressure[index],
                 isDay: response.isDay[index] == 1
             )
         }
@@ -192,6 +201,7 @@ private struct HourlyWeatherResponse: Decodable {
     let uvIndex: [Double]
     let precipitationProbability: [Int]
     let visibility: [Double]
+    let surfacePressure: [Double]
     let isDay: [Int]
 
     enum CodingKeys: String, CodingKey {
@@ -201,6 +211,7 @@ private struct HourlyWeatherResponse: Decodable {
         case uvIndex = "uv_index"
         case precipitationProbability = "precipitation_probability"
         case visibility
+        case surfacePressure = "surface_pressure"
         case isDay = "is_day"
     }
 }

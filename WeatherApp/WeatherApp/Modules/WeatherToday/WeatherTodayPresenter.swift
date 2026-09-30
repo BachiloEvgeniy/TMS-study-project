@@ -4,6 +4,7 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
 
     private weak var view: WeatherTodayViewProtocol?
     private let weatherService: WeatherServiceProtocol
+    private var weather: Weather?
 
     private var selectedCity = City(
         name: "Минск",
@@ -54,6 +55,7 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
                     latitude: city.latitude,
                     longitude: city.longitude
                 )
+                self.weather = weather
                 let viewModel = makeViewModel(from: weather)
                 view?.displayWeather(viewModel)
             } catch {
@@ -63,6 +65,18 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
                 )
             }
         }
+    }
+
+    func didSelectDay(at index: Int) {
+        guard let weather,
+              weather.daily.indices.contains(index) else {
+            return
+        }
+
+        view?.showDayDetails(
+            weather: weather,
+            selectedDayIndex: index
+        )
     }
 
     private func makeViewModel(from weather: Weather) -> WeatherTodayViewModel {
@@ -115,7 +129,14 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
     }
 
     private func makeHourlyForecast(from weather: Weather) -> [HourlyForecastViewModel] {
-        weather.hourly.enumerated().map { index, hourlyWeather in
+        let currentHour = String(weather.current.time.prefix(13))
+        let startIndex = weather.hourly.firstIndex {
+            $0.time.hasPrefix(currentHour)
+        } ?? 0
+        let endIndex = min(startIndex + 24, weather.hourly.count)
+        let nearestHours = Array(weather.hourly[startIndex..<endIndex])
+
+        return nearestHours.enumerated().map { index, hourlyWeather in
             let time: String
 
             if index == 0 {

@@ -175,6 +175,7 @@ final class WeatherTodayViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
+        navigationItem.backButtonTitle = "Назад"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .search,
             target: self,
@@ -324,9 +325,15 @@ final class WeatherTodayViewController: UIViewController {
             view.removeFromSuperview()
         }
 
-        forecast.forEach { viewModel in
+        forecast.enumerated().forEach { index, viewModel in
             let rowView = DailyForecastRowView()
             rowView.configure(with: viewModel)
+            rowView.tag = index
+            rowView.addTarget(
+                self,
+                action: #selector(didTapDailyForecast(_:)),
+                for: .touchUpInside
+            )
             dailyStackView.addArrangedSubview(rowView)
         }
     }
@@ -349,6 +356,10 @@ final class WeatherTodayViewController: UIViewController {
 
     @objc private func didTapSource() {
         presenter.didTapSource()
+    }
+
+    @objc private func didTapDailyForecast(_ sender: UIControl) {
+        presenter.didSelectDay(at: sender.tag)
     }
 }
 
@@ -415,6 +426,17 @@ extension WeatherTodayViewController: WeatherTodayViewProtocol {
             rootViewController: citySearchViewController
         )
         present(navigationController, animated: true)
+    }
+
+    func showDayDetails(weather: Weather, selectedDayIndex: Int) {
+        let viewController = DayDetailsViewController()
+        let presenter = DayDetailsPresenter(
+            view: viewController,
+            weather: weather,
+            selectedDayIndex: selectedDayIndex
+        )
+        viewController.presenter = presenter
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     func openSource(_ url: URL) {

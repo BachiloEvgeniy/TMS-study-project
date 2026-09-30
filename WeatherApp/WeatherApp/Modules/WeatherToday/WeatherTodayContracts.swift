@@ -5,6 +5,7 @@ protocol WeatherTodayViewProtocol: AnyObject {
     func displayError(title: String, message: String)
     func setLoading(_ isLoading: Bool)
     func showCitySearch(delegate: CitySearchDelegate)
+    func showDayDetails(weather: Weather, selectedDayIndex: Int)
     func openSource(_ url: URL)
 }
 
@@ -13,6 +14,7 @@ protocol WeatherTodayPresenterProtocol: AnyObject {
     func didTapSearch()
     func didTapRefresh()
     func didTapSource()
+    func didSelectDay(at index: Int)
 }
 
 struct WeatherTodayViewModel {

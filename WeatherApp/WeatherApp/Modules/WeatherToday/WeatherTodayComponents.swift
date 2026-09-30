@@ -148,7 +148,7 @@ final class HourlyForecastCell: UICollectionViewCell {
     }
 }
 
-final class DailyForecastRowView: UIView {
+final class DailyForecastRowView: UIControl {
 
     private let dayLabel: UILabel = {
         let label = UILabel()
@@ -184,6 +184,13 @@ final class DailyForecastRowView: UIView {
         return label
     }()
 
+    private let chevronImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+        imageView.tintColor = .tertiaryLabel
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -199,11 +206,19 @@ final class DailyForecastRowView: UIView {
         dateLabel.text = viewModel.date
         iconImageView.image = UIImage(systemName: viewModel.iconName)
         temperatureLabel.text = "\(viewModel.maximumTemperature)  \(viewModel.minimumTemperature)"
+        accessibilityLabel = [
+            viewModel.day,
+            viewModel.date,
+            "максимальная температура \(viewModel.maximumTemperature)",
+            "минимальная температура \(viewModel.minimumTemperature)"
+        ].joined(separator: ", ")
     }
 
     private func configureView() {
         backgroundColor = .secondarySystemGroupedBackground
         layer.cornerRadius = 16
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 
     private func configureLayout() {
@@ -212,11 +227,17 @@ final class DailyForecastRowView: UIView {
         dateStackView.spacing = 2
 
         let stackView = UIStackView(
-            arrangedSubviews: [dateStackView, iconImageView, temperatureLabel]
+            arrangedSubviews: [
+                dateStackView,
+                iconImageView,
+                temperatureLabel,
+                chevronImageView
+            ]
         )
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 16
+        stackView.isUserInteractionEnabled = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(stackView)
@@ -229,7 +250,8 @@ final class DailyForecastRowView: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             dateStackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 90),
             iconImageView.widthAnchor.constraint(equalToConstant: 40),
-            iconImageView.heightAnchor.constraint(equalToConstant: 34)
+            iconImageView.heightAnchor.constraint(equalToConstant: 34),
+            chevronImageView.widthAnchor.constraint(equalToConstant: 10)
         ])
     }
 }

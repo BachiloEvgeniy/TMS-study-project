@@ -24,6 +24,7 @@ struct HourlyWeather {
     let weatherCode: Int
     let precipitationProbability: Int
     let visibility: Double
+    let surfacePressure: Double
     let isDay: Bool
 }
 
