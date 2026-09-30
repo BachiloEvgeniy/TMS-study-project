@@ -4,22 +4,25 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
 
     private weak var view: WeatherTodayViewProtocol?
     private let weatherService: WeatherServiceProtocol
+    private let cityStorageService: CityStorageServiceProtocol
     private var weather: Weather?
-
-    private var selectedCity = City(
-        name: "Минск",
-        country: "Беларусь",
-        region: nil,
-        latitude: 53.9,
-        longitude: 27.5667
-    )
+    private var selectedCity: City
 
     init(
         view: WeatherTodayViewProtocol,
-        weatherService: WeatherServiceProtocol
+        weatherService: WeatherServiceProtocol,
+        cityStorageService: CityStorageServiceProtocol
     ) {
         self.view = view
         self.weatherService = weatherService
+        self.cityStorageService = cityStorageService
+        self.selectedCity = cityStorageService.loadCity() ?? City(
+            name: "Минск",
+            country: "Беларусь",
+            region: nil,
+            latitude: 53.9,
+            longitude: 27.5667
+        )
     }
 
     func viewDidLoad() {
@@ -267,6 +270,7 @@ extension WeatherTodayPresenter: CitySearchDelegate {
 
     func didSelectCity(_ city: City) {
         selectedCity = city
+        cityStorageService.saveCity(city)
         loadWeather()
     }
 }

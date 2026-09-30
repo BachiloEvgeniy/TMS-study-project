@@ -12,7 +12,8 @@ final class MainTabBarController: UITabBarController {
         let weatherViewController = WeatherTodayViewController()
         let weatherPresenter = WeatherTodayPresenter(
             view: weatherViewController,
-            weatherService: WeatherService()
+            weatherService: WeatherService(),
+            cityStorageService: CityStorageService()
         )
         weatherViewController.presenter = weatherPresenter
 
