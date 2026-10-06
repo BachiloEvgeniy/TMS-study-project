@@ -4,6 +4,7 @@ final class WeatherTodayViewController: UIViewController {
 
     var presenter: WeatherTodayPresenterProtocol!
 
+    private let screenFactory: ScreenFactory
     private var hourlyForecast: [HourlyForecastViewModel] = []
     private var hasWeatherData = false
 
@@ -145,6 +146,15 @@ final class WeatherTodayViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+
+    init(screenFactory: ScreenFactory) {
+        self.screenFactory = screenFactory
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -414,28 +424,18 @@ extension WeatherTodayViewController: WeatherTodayViewProtocol {
     }
 
     func showCitySearch(delegate: CitySearchDelegate) {
-        let citySearchViewController = CitySearchViewController()
-        let citySearchPresenter = CitySearchPresenter(
-            view: citySearchViewController,
-            citySearchService: CitySearchService(),
-            delegate: delegate
-        )
-        citySearchViewController.presenter = citySearchPresenter
-
+        let viewController = screenFactory.makeCitySearchScreen(delegate: delegate)
         let navigationController = UINavigationController(
-            rootViewController: citySearchViewController
+            rootViewController: viewController
         )
         present(navigationController, animated: true)
     }
 
     func showDayDetails(weather: Weather, selectedDayIndex: Int) {
-        let viewController = DayDetailsViewController()
-        let presenter = DayDetailsPresenter(
-            view: viewController,
+        let viewController = screenFactory.makeDayDetailsScreen(
             weather: weather,
             selectedDayIndex: selectedDayIndex
         )
-        viewController.presenter = presenter
         navigationController?.pushViewController(viewController, animated: true)
     }
 

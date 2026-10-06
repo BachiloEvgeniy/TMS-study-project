@@ -11,11 +11,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private let weatherService = WeatherService()
+    private let cityStorageService = CityStorageService()
+    private let citySearchService = CitySearchService()
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
 
+        let screenFactory = ScreenFactory(
+            weatherService: weatherService,
+            cityStorageService: cityStorageService,
+            citySearchService: citySearchService
+        )
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = MainTabBarController()
+        window.rootViewController = MainTabBarController(screenFactory: screenFactory)
         window.makeKeyAndVisible()
         self.window = window
     }
