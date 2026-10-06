@@ -2,7 +2,7 @@ import Foundation
 
 final class CitySearchPresenter: CitySearchPresenterProtocol {
 
-    private weak var view: CitySearchViewProtocol?
+    weak var view: CitySearchViewProtocol?
     private weak var delegate: CitySearchDelegate?
     private let citySearchService: CitySearchServiceProtocol
 
@@ -10,11 +10,9 @@ final class CitySearchPresenter: CitySearchPresenterProtocol {
     private var isSearching = false
 
     init(
-        view: CitySearchViewProtocol,
         citySearchService: CitySearchServiceProtocol,
         delegate: CitySearchDelegate
     ) {
-        self.view = view
         self.citySearchService = citySearchService
         self.delegate = delegate
     }

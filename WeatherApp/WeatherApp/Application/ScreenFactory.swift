@@ -17,31 +17,32 @@ final class ScreenFactory {
     }
 
     func makeWeatherTodayScreen() -> UIViewController {
-        let viewController = WeatherTodayViewController(screenFactory: self)
         let presenter = WeatherTodayPresenter(
-            view: viewController,
             weatherService: weatherService,
             cityStorageService: cityStorageService
         )
-        viewController.presenter = presenter
+        let viewController = WeatherTodayViewController(
+            presenter: presenter,
+            screenFactory: self
+        )
+        presenter.view = viewController
         return viewController
     }
 
     func makeWeatherMapScreen() -> UIViewController {
-        let viewController = WeatherMapViewController()
-        let presenter = WeatherMapPresenter(view: viewController)
-        viewController.presenter = presenter
+        let presenter = WeatherMapPresenter()
+        let viewController = WeatherMapViewController(presenter: presenter)
+        presenter.view = viewController
         return viewController
     }
 
     func makeCitySearchScreen(delegate: CitySearchDelegate) -> UIViewController {
-        let viewController = CitySearchViewController()
         let presenter = CitySearchPresenter(
-            view: viewController,
             citySearchService: citySearchService,
             delegate: delegate
         )
-        viewController.presenter = presenter
+        let viewController = CitySearchViewController(presenter: presenter)
+        presenter.view = viewController
         return viewController
     }
 
@@ -49,13 +50,12 @@ final class ScreenFactory {
         weather: Weather,
         selectedDayIndex: Int
     ) -> UIViewController {
-        let viewController = DayDetailsViewController()
         let presenter = DayDetailsPresenter(
-            view: viewController,
             weather: weather,
             selectedDayIndex: selectedDayIndex
         )
-        viewController.presenter = presenter
+        let viewController = DayDetailsViewController(presenter: presenter)
+        presenter.view = viewController
         return viewController
     }
 }

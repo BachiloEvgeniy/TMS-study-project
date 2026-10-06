@@ -3,7 +3,7 @@ import UIKit
 
 final class WeatherMapViewController: UIViewController {
 
-    var presenter: WeatherMapPresenterProtocol!
+    private let presenter: WeatherMapPresenterProtocol
 
     private let mapView: MKMapView = {
         let mapView = MKMapView()
@@ -23,6 +23,15 @@ final class WeatherMapViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+
+    init(presenter: WeatherMapPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

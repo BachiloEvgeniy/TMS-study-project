@@ -1,10 +1,6 @@
 final class WeatherMapPresenter: WeatherMapPresenterProtocol {
 
-    private weak var view: WeatherMapViewProtocol?
-
-    init(view: WeatherMapViewProtocol) {
-        self.view = view
-    }
+    weak var view: WeatherMapViewProtocol?
 
     func viewDidLoad() {
         view?.displayMap(

@@ -2,16 +2,14 @@ import Foundation
 
 final class DayDetailsPresenter: DayDetailsPresenterProtocol {
 
-    private weak var view: DayDetailsViewProtocol?
+    weak var view: DayDetailsViewProtocol?
     private let weather: Weather
     private let selectedDayIndex: Int
 
     init(
-        view: DayDetailsViewProtocol,
         weather: Weather,
         selectedDayIndex: Int
     ) {
-        self.view = view
         self.weather = weather
         self.selectedDayIndex = selectedDayIndex
     }

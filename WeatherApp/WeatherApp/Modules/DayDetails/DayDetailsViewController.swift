@@ -2,7 +2,7 @@ import UIKit
 
 final class DayDetailsViewController: UIViewController {
 
-    var presenter: DayDetailsPresenterProtocol!
+    private let presenter: DayDetailsPresenterProtocol
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -66,6 +66,15 @@ final class DayDetailsViewController: UIViewController {
         stackView.spacing = 12
         return stackView
     }()
+
+    init(presenter: DayDetailsPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

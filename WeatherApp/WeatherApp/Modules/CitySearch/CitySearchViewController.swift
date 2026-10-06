@@ -2,7 +2,7 @@ import UIKit
 
 final class CitySearchViewController: UIViewController {
 
-    var presenter: CitySearchPresenterProtocol!
+    private let presenter: CitySearchPresenterProtocol
 
     private var viewModels: [CitySearchViewModel] = []
 
@@ -33,6 +33,15 @@ final class CitySearchViewController: UIViewController {
     private let searchController = UISearchController(
         searchResultsController: nil
     )
+
+    init(presenter: CitySearchPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

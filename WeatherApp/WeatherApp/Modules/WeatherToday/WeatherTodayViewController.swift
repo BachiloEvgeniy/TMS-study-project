@@ -2,7 +2,7 @@ import UIKit
 
 final class WeatherTodayViewController: UIViewController {
 
-    var presenter: WeatherTodayPresenterProtocol!
+    private let presenter: WeatherTodayPresenterProtocol
 
     private let screenFactory: ScreenFactory
     private var hourlyForecast: [HourlyForecastViewModel] = []
@@ -147,7 +147,11 @@ final class WeatherTodayViewController: UIViewController {
         return label
     }()
 
-    init(screenFactory: ScreenFactory) {
+    init(
+        presenter: WeatherTodayPresenterProtocol,
+        screenFactory: ScreenFactory
+    ) {
+        self.presenter = presenter
         self.screenFactory = screenFactory
         super.init(nibName: nil, bundle: nil)
     }

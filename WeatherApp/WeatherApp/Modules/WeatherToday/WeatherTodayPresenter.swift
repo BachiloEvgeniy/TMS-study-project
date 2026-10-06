@@ -2,18 +2,16 @@ import Foundation
 
 final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
 
-    private weak var view: WeatherTodayViewProtocol?
+    weak var view: WeatherTodayViewProtocol?
     private let weatherService: WeatherServiceProtocol
     private let cityStorageService: CityStorageServiceProtocol
     private var weather: Weather?
     private var selectedCity: City
 
     init(
-        view: WeatherTodayViewProtocol,
         weatherService: WeatherServiceProtocol,
         cityStorageService: CityStorageServiceProtocol
     ) {
-        self.view = view
         self.weatherService = weatherService
         self.cityStorageService = cityStorageService
         self.selectedCity = cityStorageService.loadCity() ?? City(
