@@ -65,6 +65,10 @@ final class CitySearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.keyboardDismissMode = .onDrag
+        tableView.register(
+            CitySearchCell.self,
+            forCellReuseIdentifier: CitySearchCell.reuseIdentifier
+        )
     }
 
     private func configureNavigationBar() {
@@ -154,15 +158,14 @@ extension CitySearchViewController: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let identifier = "CityCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
-            ?? UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
-        let viewModel = viewModels[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CitySearchCell.reuseIdentifier,
+            for: indexPath
+        ) as? CitySearchCell else {
+            return UITableViewCell()
+        }
 
-        cell.textLabel?.text = viewModel.name
-        cell.detailTextLabel?.text = viewModel.details
-        cell.accessoryType = .disclosureIndicator
-
+        cell.configure(viewModel: viewModels[indexPath.row])
         return cell
     }
 }
