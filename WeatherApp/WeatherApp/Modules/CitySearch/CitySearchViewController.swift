@@ -7,6 +7,7 @@ protocol CitySearchViewProtocol: AnyObject {
     func close()
 }
 
+@MainActor
 final class CitySearchViewController: UIViewController {
 
     private let presenter: CitySearchPresenterProtocol
