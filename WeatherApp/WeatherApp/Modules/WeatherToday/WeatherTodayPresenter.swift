@@ -1,5 +1,13 @@
 import Foundation
 
+protocol WeatherTodayPresenterProtocol: AnyObject {
+    func viewDidLoad()
+    func didTapSearch()
+    func didTapRefresh()
+    func didTapSource()
+    func didSelectDay(at index: Int)
+}
+
 final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
 
     weak var view: WeatherTodayViewProtocol?

@@ -1,3 +1,7 @@
+protocol WeatherMapPresenterProtocol: AnyObject {
+    func viewDidLoad()
+}
+
 final class WeatherMapPresenter: WeatherMapPresenterProtocol {
 
     weak var view: WeatherMapViewProtocol?

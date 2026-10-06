@@ -1,11 +1,3 @@
-protocol DayDetailsViewProtocol: AnyObject {
-    func displayDayDetails(_ viewModel: DayDetailsViewModel)
-}
-
-protocol DayDetailsPresenterProtocol: AnyObject {
-    func viewDidLoad()
-}
-
 struct DayDetailsViewModel {
     let city: String
     let date: String

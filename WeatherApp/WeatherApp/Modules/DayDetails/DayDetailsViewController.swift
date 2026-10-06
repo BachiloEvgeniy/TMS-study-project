@@ -1,5 +1,9 @@
 import UIKit
 
+protocol DayDetailsViewProtocol: AnyObject {
+    func displayDayDetails(_ viewModel: DayDetailsViewModel)
+}
+
 final class DayDetailsViewController: UIViewController {
 
     private let presenter: DayDetailsPresenterProtocol

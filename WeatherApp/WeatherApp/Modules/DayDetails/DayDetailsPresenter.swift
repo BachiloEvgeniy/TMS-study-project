@@ -1,5 +1,9 @@
 import Foundation
 
+protocol DayDetailsPresenterProtocol: AnyObject {
+    func viewDidLoad()
+}
+
 final class DayDetailsPresenter: DayDetailsPresenterProtocol {
 
     weak var view: DayDetailsViewProtocol?

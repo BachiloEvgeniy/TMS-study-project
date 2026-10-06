@@ -1,5 +1,12 @@
 import UIKit
 
+protocol CitySearchViewProtocol: AnyObject {
+    func displayCities(_ viewModels: [CitySearchViewModel])
+    func displayMessage(_ message: String?)
+    func setLoading(_ isLoading: Bool)
+    func close()
+}
+
 final class CitySearchViewController: UIViewController {
 
     private let presenter: CitySearchPresenterProtocol

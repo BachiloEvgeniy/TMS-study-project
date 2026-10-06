@@ -1,5 +1,14 @@
 import UIKit
 
+protocol WeatherTodayViewProtocol: AnyObject {
+    func displayWeather(_ viewModel: WeatherTodayViewModel)
+    func displayError(title: String, message: String)
+    func setLoading(_ isLoading: Bool)
+    func showCitySearch(delegate: CitySearchDelegate)
+    func showDayDetails(weather: Weather, selectedDayIndex: Int)
+    func openSource(_ url: URL)
+}
+
 final class WeatherTodayViewController: UIViewController {
 
     private let presenter: WeatherTodayPresenterProtocol

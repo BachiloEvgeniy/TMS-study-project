@@ -1,6 +1,10 @@
 import MapKit
 import UIKit
 
+protocol WeatherMapViewProtocol: AnyObject {
+    func displayMap(title: String, message: String)
+}
+
 final class WeatherMapViewController: UIViewController {
 
     private let presenter: WeatherMapPresenterProtocol

@@ -1,5 +1,12 @@
 import Foundation
 
+protocol CitySearchPresenterProtocol: AnyObject {
+    func viewDidLoad()
+    func didSubmitSearch(_ query: String)
+    func didSelectCity(at index: Int)
+    func didTapCancel()
+}
+
 final class CitySearchPresenter: CitySearchPresenterProtocol {
 
     weak var view: CitySearchViewProtocol?
