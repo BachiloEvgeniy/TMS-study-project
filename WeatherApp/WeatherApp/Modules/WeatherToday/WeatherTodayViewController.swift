@@ -4,7 +4,6 @@ protocol WeatherTodayViewProtocol: AnyObject {
     func displayWeather(_ viewModel: WeatherTodayViewModel)
     func displayError(title: String, message: String)
     func setLoading(_ isLoading: Bool)
-    func showCitySearch(delegate: CitySearchDelegate)
     func showDayDetails(weather: Weather, selectedDayIndex: Int)
     func openSource(_ url: URL)
 }
@@ -370,7 +369,11 @@ final class WeatherTodayViewController: UIViewController {
     }
 
     @objc private func didTapSearch() {
-        presenter.didTapSearch()
+        let viewController = screenFactory.makeCitySearchScreen(delegate: presenter)
+        let navigationController = UINavigationController(
+            rootViewController: viewController
+        )
+        present(navigationController, animated: true)
     }
 
     @objc private func didTapRefresh() {
@@ -434,14 +437,6 @@ extension WeatherTodayViewController: WeatherTodayViewProtocol {
         } else {
             activityIndicator.stopAnimating()
         }
-    }
-
-    func showCitySearch(delegate: CitySearchDelegate) {
-        let viewController = screenFactory.makeCitySearchScreen(delegate: delegate)
-        let navigationController = UINavigationController(
-            rootViewController: viewController
-        )
-        present(navigationController, animated: true)
     }
 
     func showDayDetails(weather: Weather, selectedDayIndex: Int) {

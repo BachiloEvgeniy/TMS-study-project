@@ -1,8 +1,7 @@
 import Foundation
 
-protocol WeatherTodayPresenterProtocol: AnyObject {
+protocol WeatherTodayPresenterProtocol: CitySearchDelegate {
     func viewDidLoad()
-    func didTapSearch()
     func didTapRefresh()
     func didTapSource()
     func didSelectDay(at index: Int)
@@ -33,10 +32,6 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
 
     func viewDidLoad() {
         loadWeather()
-    }
-
-    func didTapSearch() {
-        view?.showCitySearch(delegate: self)
     }
 
     func didTapRefresh() {
@@ -272,7 +267,7 @@ final class WeatherTodayPresenter: WeatherTodayPresenterProtocol {
     }
 }
 
-extension WeatherTodayPresenter: CitySearchDelegate {
+extension WeatherTodayPresenter {
 
     func didSelectCity(_ city: City) {
         selectedCity = city
